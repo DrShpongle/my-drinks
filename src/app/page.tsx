@@ -1,45 +1,49 @@
 'use client'
-
 import * as React from 'react'
-import { useQuery } from '@tanstack/react-query'
-
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { getCocktailsByName } from '@/lib/cocktails'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-export default function Home() {
-  const [cocktail, setCocktail] = React.useState<string>('')
-  const inputRef = React.useRef<HTMLInputElement>(null)
+interface Cocktail {
+  idDrink: string
+  strDrink: string
+  // Add other properties as needed
+}
 
-  const {
-    data = [],
-    isPending,
-    isError,
-    error,
-    status,
-    isFetching,
-    fetchStatus,
-    isSuccess,
-  } = useQuery({
-    queryKey: ['cocktails'],
-    queryFn: async () => await getCocktailsByName(cocktail),
-    enabled: cocktail !== '',
+export default function Home() {
+  const inputRef = React.useRef<HTMLInputElement>(null)
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation({
+    mutationFn: (searchTerm: string) => getCocktailsByName(searchTerm),
+    onSuccess: data => {
+      if (inputRef.current) {
+        queryClient.setQueryData(['cocktails', inputRef.current.value], data)
+        inputRef.current.value = ''
+      }
+    },
   })
 
   const handleSearch = () => {
-    if (inputRef?.current?.value && inputRef.current.value.trim() !== '') {
-      setCocktail(inputRef.current.value)
+    if (inputRef.current && inputRef.current.value.trim() !== '') {
+      mutation.mutate(inputRef.current.value)
     }
   }
 
-  React.useEffect(() => {
-    if (isSuccess) {
-      if (inputRef?.current?.value) {
-        inputRef.current.value = ''
-      }
-      setCocktail('')
+  const renderCocktails = () => {
+    if (!mutation.data || !mutation.data.drinks) {
+      return <p>No cocktails found.</p>
     }
-  }, [isSuccess])
+
+    return (
+      <ul>
+        {mutation.data.drinks.map((drink: Cocktail) => (
+          <li key={drink.idDrink}>{drink.strDrink}</li>
+        ))}
+      </ul>
+    )
+  }
 
   return (
     <div className="flex flex-col items-center max-w-screen-lg w-full mx-auto">
@@ -54,6 +58,13 @@ export default function Home() {
           Search
         </Button>
       </div>
+      {mutation.isPending && <p>Loading...</p>}
+      {mutation.isError && (
+        <p>
+          Error: {(mutation.error as Error)?.message || 'An error occurred'}
+        </p>
+      )}
+      {mutation.isSuccess && renderCocktails()}
     </div>
   )
 }
