@@ -23,15 +23,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          'min-h-screen bg-background font-sans antialiased',
-          fontSans.variable
-        )}
-      >
+      <body className={cn('font-sans antialiased', fontSans.variable)}>
         <Providers>
-          <Navigation />
-          {children}
+          <div className="flex flex-col items-center">
+            <Navigation />
+            <main className="grow w-full">{children}</main>
+          </div>
         </Providers>
       </body>
     </html>
