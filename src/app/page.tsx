@@ -61,59 +61,61 @@ export default function Home() {
   }
 
   return (
-    <div className="flex flex-col items-center max-w-screen-lg w-full mx-auto pb-32">
-      <h1 className="font-semibold text-3xl">Choose you cocktail 🍸</h1>
-      <div className="flex items-center w-full mt-20">
-        <Input
-          ref={inputRef}
-          placeholder="Search for cocktail"
-          className="rounded-r-none grow text-xl"
-          disabled={mutation.isPending}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              e.preventDefault()
-              handleSearch()
-            }
-          }}
-        />
-        <Button
-          type="button"
-          className="rounded-l-none text-3xl min-w-20"
-          onClick={handleSearch}
-          disabled={mutation.isPending}
-        >
-          🍹
-        </Button>
+    <div className="pb-32">
+      <div className="container flex flex-col items-center">
+        <h1 className="font-semibold text-3xl">Choose you cocktail 🍸</h1>
+        <div className="flex items-center w-full mt-20">
+          <Input
+            ref={inputRef}
+            placeholder="Search for cocktail"
+            className="rounded-r-none grow text-xl"
+            disabled={mutation.isPending}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                handleSearch()
+              }
+            }}
+          />
+          <Button
+            type="button"
+            className="rounded-l-none text-3xl min-w-20"
+            onClick={handleSearch}
+            disabled={mutation.isPending}
+          >
+            🍹
+          </Button>
+        </div>
+        {mutation.isPending && <p>Loading...</p>}
+        {mutation.isError && (
+          <p>
+            Error: {(mutation.error as Error)?.message || 'An error occurred'}
+          </p>
+        )}
+        {mutation.isSuccess && (
+          <div className="w-full mt-20">{renderCocktails()}</div>
+        )}
+        {!isEmpty(searchResults) && (
+          <>
+            <h3 className="mt-20 text-lg font-semibold">
+              Recent search results:
+            </h3>
+            <div className="flex flex-wrap justify-center gap-4 mt-4">
+              {searchResults?.map(res => {
+                return (
+                  <Button
+                    variant="outline"
+                    key={res}
+                    onClick={() => mutation.mutate(res)}
+                  >
+                    {res}
+                  </Button>
+                )
+              })}
+            </div>
+          </>
+        )}
       </div>
-      {mutation.isPending && <p>Loading...</p>}
-      {mutation.isError && (
-        <p>
-          Error: {(mutation.error as Error)?.message || 'An error occurred'}
-        </p>
-      )}
-      {mutation.isSuccess && (
-        <div className="w-full mt-20">{renderCocktails()}</div>
-      )}
-      {!isEmpty(searchResults) && (
-        <>
-          <h3 className="mt-20 text-lg font-semibold">
-            Recent search results:
-          </h3>
-          <div className="flex flex-wrap justify-center gap-4 mt-4">
-            {searchResults?.map(res => {
-              return (
-                <Button
-                  variant="outline"
-                  key={res}
-                  onClick={() => mutation.mutate(res)}
-                >
-                  {res}
-                </Button>
-              )
-            })}
-          </div>
-        </>
-      )}
     </div>
   )
 }

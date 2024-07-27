@@ -40,10 +40,10 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
   const ingredientMeasures = getIngredients(cocktail)
 
   return (
-    <div className="border border-border rounded-md p-3 flex gap-4">
+    <div className="border border-border rounded-md p-3 flex gap-4 overflow-hidden">
       <Link
         href={`/${cocktail.idDrink}`}
-        className="relative w-40 h-48 shrink-0 rounded-md overflow-hidden group"
+        className="relative w-24 h-44 md:w-40 md:h-48 shrink-0 rounded-md overflow-hidden group"
       >
         <Image
           src={cocktail.strDrinkThumb}
@@ -56,7 +56,7 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
         <div className="overflow-hidden flex justify-between w-full">
           <Link
             href={`/${cocktail.idDrink}`}
-            className="font-semibold text-2xl block overflow-hidden hover:underline duration-150"
+            className="font-semibold text-lg md:text-2xl block overflow-hidden hover:underline duration-150"
           >
             <h3 className="truncate">{cocktail.strDrink}</h3>
           </Link>
@@ -88,7 +88,7 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
 
 const CocktailsList: React.FC<{ cocktails: Cocktail[] }> = ({ cocktails }) => {
   return (
-    <div className="grid grid-cols-2 gap-4 w-full">
+    <div className="grid md:grid-cols-2 gap-4 w-full">
       {cocktails.map(cocktail => (
         <CocktailItem key={cocktail.idDrink} cocktail={cocktail} />
       ))}
