@@ -13,7 +13,7 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: 'My Drinks',
-  description: "Let's learn Redux at last",
+  description: 'Choose your favorite cocktail!',
 }
 
 export default function RootLayout({
