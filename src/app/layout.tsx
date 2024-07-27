@@ -12,7 +12,7 @@ const fontSans = FontSans({
 })
 
 export const metadata: Metadata = {
-  title: 'Drinks Shoppinc Cart',
+  title: 'My Drinks',
   description: "Let's learn Redux at last",
 }
 
@@ -27,7 +27,7 @@ export default function RootLayout({
         <Providers>
           <div className="flex flex-col items-center">
             <Navigation />
-            <main className="grow w-full">{children}</main>
+            <main className="grow w-full pt-40">{children}</main>
           </div>
         </Providers>
       </body>

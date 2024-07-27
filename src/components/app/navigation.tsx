@@ -1,24 +1,31 @@
+import Link from 'next/link'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { ShoppingCart } from 'lucide-react'
+import { FolderHeart } from 'lucide-react'
+import Favorites from '@/components/favorites'
 
 const Navigation = () => {
   return (
-    <header className="py-4 w-full">
-      <nav className="max-w-screen-lg px-4 mx-auto flex items-center justify-between">
-        <div>links</div>
+    <header className="py-4 w-full border-b border-border fixed bg-background">
+      <nav className="container flex items-center justify-between">
+        <div>
+          <Link href="/" className="text-5xl">
+            🍹
+          </Link>
+        </div>
         <div>
           <Popover>
             <PopoverTrigger>
-              <div className="flex items-center space-x-3">
-                <ShoppingCart />
-                <span>Cart</span>
+              <div className="flex items-center">
+                <FolderHeart />
               </div>
             </PopoverTrigger>
-            <PopoverContent>Place content for the popover here.</PopoverContent>
+            <PopoverContent>
+              <Favorites />
+            </PopoverContent>
           </Popover>
         </div>
       </nav>
