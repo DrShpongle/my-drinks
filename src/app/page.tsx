@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input'
 import CocktailsList from '@/components/cocktails-list'
 
 export default function Home() {
+  const [isClient, setIsClient] = React.useState<boolean>(false)
   const inputRef = React.useRef<HTMLInputElement>(null)
   const queryClient = useQueryClient()
   const [searchResults, setSearchResults] = useLocalStorage<string[]>(
@@ -23,7 +24,6 @@ export default function Home() {
   const mutation = useMutation({
     mutationFn: (searchTerm: string) => getCocktailsByName(searchTerm),
     onSuccess: data => {
-      console.log(data)
       if (inputRef.current) {
         queryClient.setQueryData(['cocktails', inputRef.current.value], data)
         if (searchResults && inputRef.current.value && !isEmpty(data.drinks)) {
@@ -50,6 +50,14 @@ export default function Home() {
     }
 
     return <CocktailsList cocktails={mutation.data.drinks} />
+  }
+
+  React.useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  if (!isClient) {
+    return null // or a loading spinner, or similar
   }
 
   return (

@@ -8,8 +8,6 @@ import { Heart } from 'lucide-react'
 
 import { getCocktailById, getIngredients } from '@/lib/cocktails'
 
-// console.log('ingredientMeasures:', ingredientMeasures)
-
 const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
   const { cocktailId } = params
   const {

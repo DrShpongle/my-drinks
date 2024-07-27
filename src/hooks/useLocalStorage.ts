@@ -1,31 +1,28 @@
 import { useState, useEffect } from 'react'
 
-// Type definition for the hook's return type
-type UseLocalStorage<T> = [T | undefined, (value: T) => void]
-
-// Custom hook for local storage
 export function useLocalStorage<T>(
   key: string,
   initialValue: T
-): UseLocalStorage<T> {
-  // State to store the value
-  const [storedValue, setStoredValue] = useState<T | undefined>(() => {
-    if (typeof window !== 'undefined') {
+): [T, (value: T | ((val: T) => T)) => void] {
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    try {
       const item = window.localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
+    } catch (error) {
+      console.error(error)
+      return initialValue
     }
-    return initialValue
   })
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      window.localStorage.setItem(key, JSON.stringify(storedValue))
+  const setValue = (value: T | ((val: T) => T)) => {
+    try {
+      const valueToStore =
+        value instanceof Function ? value(storedValue) : value
+      setStoredValue(valueToStore)
+      window.localStorage.setItem(key, JSON.stringify(valueToStore))
+    } catch (error) {
+      console.error(error)
     }
-  }, [key, storedValue])
-
-  // Function to set the value in local storage
-  const setValue = (value: T) => {
-    setStoredValue(value)
   }
 
   return [storedValue, setValue]
