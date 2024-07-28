@@ -86,6 +86,7 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
               alt={cocktail.strDrink}
               width={800}
               height={800}
+              priority
               className="object-cover group-hover:rotate-6 group-hover:scale-125 duration-300"
             />
           </div>

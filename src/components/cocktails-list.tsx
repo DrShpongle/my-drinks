@@ -57,7 +57,7 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
           </CardTitle>
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <Button
                   variant={null}
                   className="shrink-0 self-start text-2xl cursor-pointer p-0 leading-none flex items-start"
@@ -87,6 +87,7 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
             src={cocktail.strDrinkThumb}
             alt={cocktail.strDrink}
             fill
+            sizes="(max-width: 768px) 100vw, 320px"
             className="object-cover group-hover:rotate-6 group-hover:scale-125 duration-300"
           />
         </Link>
