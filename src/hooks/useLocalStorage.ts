@@ -1,5 +1,31 @@
 import { useState, useEffect } from 'react'
 
+// utils/localStorage.ts
+
+export const loadState = <T>(key: string, initialValue: T): T => {
+  if (typeof window === 'undefined') {
+    return initialValue;
+  }
+  try {
+    const item = window.localStorage.getItem(key);
+    return item ? JSON.parse(item) : initialValue;
+  } catch (error) {
+    console.error(error);
+    return initialValue;
+  }
+};
+
+export const saveState = <T>(key: string, state: T): void => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  try {
+    window.localStorage.setItem(key, JSON.stringify(state));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export function useLocalStorage<T>(
   key: string,
   initialValue: T

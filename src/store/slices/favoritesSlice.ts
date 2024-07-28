@@ -8,12 +8,12 @@ export interface FavoriteItem {
 
 export interface FavoritesState {
   items: FavoriteItem[]
-  total: number
+  // total: number
 }
 
 const initialState: FavoritesState = {
   items: [],
-  total: 0,
+  // total: 0,
 }
 
 const favoritesSlice = createSlice({
@@ -27,18 +27,18 @@ const favoritesSlice = createSlice({
       if (!existingItem) {
         state.items.push({ ...action.payload })
       }
-      state.total += 1
+      // state.total += 1
     },
     removeFavorite: (state, action: PayloadAction<string>) => {
       const existingItem = state.items.find(item => item.id === action.payload)
       if (existingItem) {
-        state.total -= 1
+        // state.total -= 1
         state.items = state.items.filter(item => item.id !== action.payload)
       }
     },
     clearFavorites: state => {
       state.items = []
-      state.total = 0
+      // state.total = 0
     },
   },
 })

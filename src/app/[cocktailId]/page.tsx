@@ -31,13 +31,13 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
   const { cocktailId } = params
   const {
     data,
-    isPending,
-    isError,
-    error,
-    status,
-    isFetching,
-    fetchStatus,
-    isSuccess,
+    // isPending,
+    // isError,
+    // error,
+    // status,
+    // isFetching,
+    // fetchStatus,
+    // isSuccess,
   } = useQuery({
     queryKey: ['cocktail', cocktailId],
     queryFn: async () => await getCocktailById(cocktailId),
@@ -51,7 +51,7 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
     ing => ing.measure === 'Garnish with'
   )
 
-  const isFavorite = favorites.items.find(fav => fav.id === cocktail.idDrink)
+  const isFavorite = favorites.items.find(fav => fav.id === cocktail?.idDrink)
 
   const toggleFavorite = () => {
     if (isFavorite) {
