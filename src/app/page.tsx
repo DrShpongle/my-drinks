@@ -3,8 +3,6 @@
 import * as React from 'react'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { isEmpty } from 'lodash'
-// import { useLocalStorage } from '@uidotdev/usehooks'
-// import { useLocalStorage } from 'react-use'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 
 import { getCocktailsByName } from '@/lib/cocktails'
@@ -57,14 +55,16 @@ export default function Home() {
   }, [])
 
   if (!isClient) {
-    return null // or a loading spinner, or similar
+    return null
   }
 
   return (
     <div className="pb-32">
       <div className="container flex flex-col items-center">
-        <h1 className="font-semibold text-3xl">Choose you cocktail 🍸</h1>
-        <div className="flex items-center w-full mt-20">
+        <h1 className="font-semibold text-2xl md:text-3xl">
+          Find your cocktail 🍸
+        </h1>
+        <div className="flex items-center w-full my-10 md:my-20">
           <Input
             ref={inputRef}
             placeholder="Search for cocktail"
@@ -93,7 +93,7 @@ export default function Home() {
           </p>
         )}
         {mutation.isSuccess && (
-          <div className="w-full mt-20">{renderCocktails()}</div>
+          <div className="w-full">{renderCocktails()}</div>
         )}
         {!isEmpty(searchResults) && (
           <>

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import { removeFavorite, clearFavorites } from '@/store/slices/favoritesSlice'
 import { isEmpty } from 'lodash'
-import { Trash2 } from 'lucide-react'
+import { MdOutlineRemoveCircle } from 'react-icons/md'
 
 import { Button } from '@/components/ui/button'
 
@@ -23,9 +23,9 @@ export default function Favorites() {
 
   return (
     <div className="flex flex-col items-center">
-      <h3 className="font-semibold text-center">My Drinks</h3>
+      <h3 className="font-semibold text-center">My Favorite Drinks</h3>
       {isEmpty(favorites.items) ? (
-        <span className="text-center mt-2">
+        <span className="text-center mt-2 text-sm">
           You didn&apos;t add any drinks yet!
         </span>
       ) : (
@@ -52,9 +52,9 @@ export default function Favorites() {
                 </Link>
                 <button
                   onClick={() => handleRemoveFavorite(item.id)}
-                  className="shrink-0 hover:text-red-500 divide-purple-100"
+                  className="shrink-0 text-red-500 divide-purple-100"
                 >
-                  <Trash2 className="text-sm" />
+                  <MdOutlineRemoveCircle className="text-lg" />
                 </button>
               </li>
             ))}

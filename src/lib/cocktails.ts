@@ -2,6 +2,7 @@ export interface Cocktail {
   idDrink: string
   strDrink: string
   strDrinkThumb: string
+  strGlass: string
   [key: string]: string | null
 }
 

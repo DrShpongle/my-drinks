@@ -27,7 +27,9 @@ export default function RootLayout({
         <Providers>
           <div className="flex flex-col items-center">
             <Navigation />
-            <main className="grow w-full pt-40">{children}</main>
+            <main className="grow w-full pt-28 md:pt-32 lg:pt-40 pb-20">
+              {children}
+            </main>
           </div>
         </Providers>
       </body>
