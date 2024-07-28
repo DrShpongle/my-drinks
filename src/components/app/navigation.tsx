@@ -1,11 +1,5 @@
 import Link from 'next/link'
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import { BiSolidDrink } from 'react-icons/bi'
 import Favorites from '@/components/favorites'
 import {
   Tooltip,
@@ -24,23 +18,7 @@ const Navigation = () => {
           </Link>
         </div>
         <div>
-          <Popover>
-            <PopoverTrigger className="p-0 text-2xl">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <BiSolidDrink />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Favorites</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </PopoverTrigger>
-            <PopoverContent align="end">
-              <Favorites />
-            </PopoverContent>
-          </Popover>
+          <Favorites />
         </div>
       </nav>
     </header>
