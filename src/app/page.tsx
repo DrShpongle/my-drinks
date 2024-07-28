@@ -101,7 +101,7 @@ export default function Home() {
               Recent search results:
             </h3>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
-              {searchResults?.map(res => {
+              {searchResults?.slice(0, 10).map(res => {
                 return (
                   <Button
                     variant="outline"
