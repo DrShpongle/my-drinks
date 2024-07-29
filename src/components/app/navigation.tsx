@@ -2,12 +2,6 @@ import Link from 'next/link'
 
 import { ThemeToggle } from '@/components/theme-toggle'
 import Favorites from '@/components/favorites'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
 
 const Navigation = () => {
   return (
@@ -19,8 +13,8 @@ const Navigation = () => {
           </Link>
         </div>
         <div className="flex space-x-2 items-center">
-          <Favorites />
           <ThemeToggle />
+          <Favorites />
         </div>
       </nav>
     </header>
