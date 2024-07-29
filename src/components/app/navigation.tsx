@@ -1,5 +1,6 @@
 import Link from 'next/link'
 
+import { ThemeToggle } from '@/components/theme-toggle'
 import Favorites from '@/components/favorites'
 import {
   Tooltip,
@@ -17,8 +18,9 @@ const Navigation = () => {
             🍹
           </Link>
         </div>
-        <div>
+        <div className="flex space-x-2 items-center">
           <Favorites />
+          <ThemeToggle />
         </div>
       </nav>
     </header>

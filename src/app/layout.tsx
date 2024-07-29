@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <body className={cn('font-sans antialiased', fontSans.variable)}>
         <Providers>
           <div className="flex flex-col items-center">
