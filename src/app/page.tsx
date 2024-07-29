@@ -54,10 +54,6 @@ export default function Home() {
     setIsClient(true)
   }, [])
 
-  // if (!isClient) {
-  //   return null
-  // }
-
   return (
     <div className="pb-32">
       <div className="container flex flex-col items-center">
