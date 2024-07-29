@@ -60,7 +60,7 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
               <TooltipTrigger asChild>
                 <Button
                   variant={null}
-                  className="shrink-0 self-start text-2xl cursor-pointer p-0 leading-none flex items-start betterhover:hover:text-blue-500"
+                  className="shrink-0 self-start text-2xl cursor-pointer p-0 leading-none flex items-start betterhover:hover:text-blue-400"
                   onClick={toggleFavorite}
                 >
                   {isFavorite ? (
@@ -107,9 +107,6 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
           </div>
         )}
       </CardContent>
-      {/* <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter> */}
     </Card>
   )
 }

@@ -9,6 +9,7 @@ import { getCocktailsByName } from '@/lib/cocktails'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import CocktailsList from '@/components/cocktails-list'
+import Spinner from '@/components/spinner'
 
 export default function Home() {
   const [isClient, setIsClient] = React.useState<boolean>(false)
@@ -36,6 +37,8 @@ export default function Home() {
     },
   })
 
+  console.log({ mutation })
+
   const handleSearch = () => {
     if (inputRef.current && inputRef.current.value.trim() !== '') {
       mutation.mutate(inputRef.current.value)
@@ -44,7 +47,7 @@ export default function Home() {
 
   const renderCocktails = () => {
     if (!mutation.data || !mutation.data.drinks) {
-      return <p>No cocktails found.</p>
+      return null
     }
 
     return <CocktailsList cocktails={mutation.data.drinks} />
@@ -75,20 +78,23 @@ export default function Home() {
           />
           <Button
             type="button"
-            className="rounded-l-none text-3xl min-w-20 bg-blue-500"
+            className="rounded-l-none text-3xl min-w-20 bg-blue-400 betterhover:hover:bg-blue-500"
             onClick={handleSearch}
             disabled={mutation.isPending}
           >
             🍹
           </Button>
         </div>
-        <div className="h-10 md:h-20 flex justify-center items-center w-full">
-          {mutation.isPending && <p>Loading...</p>}
+        <div className="h-28 md:h-32 lg:h-36 flex justify-center items-center w-full">
+          {mutation.isPending && <Spinner />}
           {mutation.isError && (
             <p>
               Error: {(mutation.error as Error)?.message || 'An error occurred'}
             </p>
           )}
+          {(!mutation.data || !mutation.data.drinks) &&
+            !mutation.isPending &&
+            mutation.submittedAt !== 0 && <p>No cocktails found 😭</p>}
         </div>
         {isClient && !isEmpty(searchResults) && (
           <div className="mb-20 flex flex-col items-center">
