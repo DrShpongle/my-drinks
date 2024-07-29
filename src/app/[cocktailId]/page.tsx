@@ -2,11 +2,16 @@
 
 import * as React from 'react'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
-import { BiDrink } from 'react-icons/bi'
-import { TbComponents } from 'react-icons/tb'
-import { TbGlassCocktail } from 'react-icons/tb'
-import { TbLemon } from 'react-icons/tb'
+import {
+  BiDrink,
+  BiSolidDrink,
+  BiFoodMenu,
+  BiLemon,
+  BiWine,
+} from 'react-icons/bi'
+import toast from 'react-hot-toast'
 
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
 import {
@@ -16,16 +21,27 @@ import {
 } from '@/store/slices/favoritesSlice'
 import { getCocktailById, getIngredients } from '@/lib/cocktails'
 import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import CopyToClipboard from '@/components/copy-to-clipboard'
 
 const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
+  const pathname = usePathname()
+  const url = `${process.env.NEXT_PUBLIC_URL}${pathname}`
   const favorites = useAppSelector(state => state.favorites)
   const dispatch = useAppDispatch()
 
   const handleAddFavorite = ({ id, name, thumb }: FavoriteItem) => {
     dispatch(addFavorite({ id, name, thumb }))
+    toast.success('added to favorites')
   }
   const handleRemoveFavorite = (id: string) => {
     dispatch(removeFavorite(id))
+    toast.success('removed from favorites')
   }
 
   const { cocktailId } = params
@@ -71,12 +87,50 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
         <h1 className="text-3xl md:text-4xl lg:text-5xl text-center font-semibold">
           {cocktail.strDrink}
         </h1>
-        <Button className="space-x-2" onClick={toggleFavorite}>
-          <span>
-            {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-          </span>
-          <BiDrink size={16} />
-        </Button>
+        <div className="flex items-center space-x-3">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="space-x-2"
+                  onClick={toggleFavorite}
+                  variant="secondary"
+                >
+                  <span>
+                    {isFavorite ? (
+                      <BiSolidDrink size={16} />
+                    ) : (
+                      <BiDrink size={16} />
+                    )}
+                  </span>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <p>
+                  {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div>
+                  <CopyToClipboard
+                    onSuccess={() => {
+                      toast.success('Copied to clipboard')
+                    }}
+                    svgClassName="w-4 h-4"
+                    link={url}
+                  />
+                </div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                <p>Copy to clipboard</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </div>
       <div className="container mt-10 md:mt-20">
         <div className="flex flex-col md:flex-row gap-8">
@@ -95,10 +149,10 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
             {coreIngridients && coreIngridients.length > 0 && (
               <div>
                 <h3 className="font-semibold text-xl flex items-center space-x-1">
-                  <TbComponents />
+                  <BiFoodMenu />
                   <span>Ingridients:</span>
                 </h3>
-                <ul className="list-none mt-2 pl-3">
+                <ul className="list-none mt-2 pl-3 italic">
                   {coreIngridients.map(item => {
                     return (
                       <li
@@ -107,7 +161,7 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
                       >
                         <span className="font-semibold">{item.ingredient}</span>
                         {item.measure && (
-                          <span className="italic text-sm text-zinc-500">
+                          <span className="text-sm text-zinc-500">
                             ({item.measure})
                           </span>
                         )}
@@ -119,7 +173,7 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
             )}
             {cocktail.strGlass && (
               <h3 className="font-semibold text-xl flex items-center space-x-1">
-                <TbGlassCocktail />
+                <BiWine />
                 <span>Glass:</span>
                 <span className="text-base self-end italic text-zinc-500 font-normal">
                   {cocktail.strGlass}
@@ -129,10 +183,10 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
             {igridientsForGarnish && igridientsForGarnish.length > 0 && (
               <div>
                 <h3 className="font-semibold text-xl flex items-center space-x-1">
-                  <TbLemon />
+                  <BiLemon />
                   <span>Garnish with:</span>
                 </h3>
-                <ul className="list-none mt-2 pl-3">
+                <ul className="list-none mt-2 pl-3 italic">
                   {igridientsForGarnish.map(item => {
                     return (
                       <li
@@ -140,7 +194,7 @@ const CocktailPage = ({ params }: { params: { cocktailId: string } }) => {
                         className="before:content-['-'] before:mr-1 block font-medium space-x-1"
                       >
                         <span className="font-semibold">{item.ingredient}</span>
-                        <span className="italic text-sm text-zinc-500">
+                        <span className="text-sm text-zinc-500">
                           ({item.measure})
                         </span>
                       </li>

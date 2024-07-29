@@ -2,6 +2,7 @@ import * as React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { BiDrink, BiSolidDrink } from 'react-icons/bi'
+import toast from 'react-hot-toast'
 
 import { getIngredients, Cocktail } from '@/lib/cocktails'
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
@@ -25,9 +26,11 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
 
   const handleAddFavorite = ({ id, name, thumb }: FavoriteItem) => {
     dispatch(addFavorite({ id, name, thumb }))
+    toast.success('added to favorites')
   }
   const handleRemoveFavorite = (id: string) => {
     dispatch(removeFavorite(id))
+    toast.success('removed from favorites')
   }
 
   const isFavorite = favorites.items.find(fav => fav.id === cocktail.idDrink)
@@ -71,7 +74,9 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Add to favorites</p>
+                <p>
+                  {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                </p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

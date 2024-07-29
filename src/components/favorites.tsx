@@ -8,6 +8,7 @@ import { removeFavorite, clearFavorites } from '@/store/slices/favoritesSlice'
 import { isEmpty } from 'lodash'
 import { MdOutlineRemoveCircle } from 'react-icons/md'
 import { BiSolidDrink } from 'react-icons/bi'
+import toast from 'react-hot-toast'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -39,6 +40,7 @@ export default function Favorites() {
   const handleClearFavorites = () => {
     dispatch(clearFavorites())
     handleClosePopover()
+    toast.success('all favorites have been removed')
   }
 
   return (
