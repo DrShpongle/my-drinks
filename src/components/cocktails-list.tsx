@@ -60,7 +60,7 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
               <TooltipTrigger asChild>
                 <Button
                   variant={null}
-                  className="shrink-0 self-start text-2xl cursor-pointer p-0 leading-none flex items-start"
+                  className="shrink-0 self-start text-2xl cursor-pointer p-0 leading-none flex items-start betterhover:hover:text-blue-500"
                   onClick={toggleFavorite}
                 >
                   {isFavorite ? (
@@ -76,7 +76,6 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
             </Tooltip>
           </TooltipProvider>
         </div>
-        {/* <CardDescription>Card Description</CardDescription> */}
       </CardHeader>
       <CardContent className="flex gap-4 px-5 pb-5 md:px-6 md:pb-6">
         <Link
@@ -94,7 +93,7 @@ const CocktailItem: React.FC<{ cocktail: Cocktail }> = ({ cocktail }) => {
         {ingredientMeasures.length > 0 && (
           <div>
             <h3 className="font-semibold leading-none">Ingridients:</h3>
-            <ul className="list-none text-zinc-600 line-clamp-6 text-sm mt-2">
+            <ul className="list-none text-muted-foreground line-clamp-6 text-sm mt-2">
               {ingredientMeasures
                 .filter(item => item.measure !== 'Garnish with')
                 .map(item => {
@@ -126,51 +125,3 @@ const CocktailsList: React.FC<{ cocktails: Cocktail[] }> = ({ cocktails }) => {
 }
 
 export default CocktailsList
-
-{
-  /*
-    <div className="border border-border rounded-md p-3 flex gap-4 overflow-hidden">
-      <Link
-        href={`/${cocktail.idDrink}`}
-        className="relative w-24 h-44 md:w-40 md:h-48 shrink-0 rounded-md overflow-hidden group"
-      >
-        <Image
-          src={cocktail.strDrinkThumb}
-          alt={cocktail.strDrink}
-          fill
-          className="object-cover group-hover:rotate-6 group-hover:scale-125 duration-300"
-        />
-      </Link>
-      <div className="overflow-hidden grow">
-        <div className="overflow-hidden flex justify-between w-full">
-          <Link
-            href={`/${cocktail.idDrink}`}
-            className="font-semibold text-lg md:text-2xl block overflow-hidden hover:underline duration-150"
-          >
-            <h3 className="truncate">{cocktail.strDrink}</h3>
-          </Link>
-          <div className="shrink-0 self-start" onClick={toggleFavorite}>
-            <Heart
-              className={cn('hover:text-red-500 cursor-pointer duration-150', {
-                'text-red-500': isFavorite,
-              })}
-            />
-          </div>
-        </div>
-        {ingredientMeasures.length > 0 && (
-          <ul className="list-none mt-3 text-zinc-600 line-clamp-6">
-            {ingredientMeasures
-              .filter(item => item.measure !== 'Garnish with')
-              .map(item => {
-                return (
-                  <li key={`ingridient-${item.ingredient}-${item.measure}`}>
-                    - {item.ingredient}
-                  </li>
-                )
-              })}
-          </ul>
-        )}
-      </div>
-    </div>
-    */
-}
