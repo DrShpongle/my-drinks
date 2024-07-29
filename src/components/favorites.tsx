@@ -46,7 +46,9 @@ export default function Favorites() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <BiSolidDrink />
+              <span>
+                <BiSolidDrink />
+              </span>
             </TooltipTrigger>
             <TooltipContent>
               <p>Favorites</p>
@@ -63,7 +65,7 @@ export default function Favorites() {
             </span>
           ) : (
             <>
-              <ul className="space-y-2 w-full max-h-[70vh] overflow-y-scroll scrollbar-thin">
+              <ul className="space-y-2 w-full max-h-[256px] overflow-y-auto scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-thin scrollbar-thumb-zinc-300 scrollbar-track-transparent overscroll-contain pr-1">
                 {favorites.items.map(item => (
                   <li
                     key={item.id}
