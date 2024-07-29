@@ -1,59 +1,45 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
-// utils/localStorage.ts
-
+// Utility functions for Redux
 export const loadState = <T>(key: string, initialValue: T): T => {
   if (typeof window === 'undefined') {
-    return initialValue;
+    return initialValue
   }
   try {
-    const item = window.localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
+    const item = window.localStorage.getItem(key)
+    return item ? JSON.parse(item) : initialValue
   } catch (error) {
-    console.error(error);
-    return initialValue;
+    console.error(error)
+    return initialValue
   }
-};
+}
 
 export const saveState = <T>(key: string, state: T): void => {
   if (typeof window === 'undefined') {
-    return;
+    return
   }
   try {
-    window.localStorage.setItem(key, JSON.stringify(state));
+    window.localStorage.setItem(key, JSON.stringify(state))
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
-};
+}
 
+// Hook for component-level use
 export function useLocalStorage<T>(
   key: string,
   initialValue: T
 ): [T, (value: T | ((val: T) => T)) => void] {
-  const isBrowser = typeof window !== 'undefined'
-
   const [storedValue, setStoredValue] = useState<T>(() => {
-    if (!isBrowser) {
-      return initialValue
-    }
-    try {
-      const item = window.localStorage.getItem(key)
-      return item ? JSON.parse(item) : initialValue
-    } catch (error) {
-      console.error(error)
-      return initialValue
-    }
+    return loadState(key, initialValue)
   })
 
   const setValue = (value: T | ((val: T) => T)) => {
-    if (!isBrowser) {
-      return
-    }
     try {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value
       setStoredValue(valueToStore)
-      window.localStorage.setItem(key, JSON.stringify(valueToStore))
+      saveState(key, valueToStore)
     } catch (error) {
       console.error(error)
     }

@@ -54,9 +54,9 @@ export default function Home() {
     setIsClient(true)
   }, [])
 
-  if (!isClient) {
-    return null
-  }
+  // if (!isClient) {
+  //   return null
+  // }
 
   return (
     <div className="pb-32">
@@ -95,7 +95,7 @@ export default function Home() {
         {mutation.isSuccess && (
           <div className="w-full">{renderCocktails()}</div>
         )}
-        {!isEmpty(searchResults) && (
+        {isClient && !isEmpty(searchResults) && (
           <>
             <h3 className="mt-20 text-lg font-semibold">
               Recent search results:

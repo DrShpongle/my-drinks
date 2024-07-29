@@ -1,5 +1,3 @@
-// store/index.ts
-
 import { configureStore, Middleware } from '@reduxjs/toolkit'
 import favoritesReducer, { FavoritesState } from './slices/favoritesSlice'
 import { loadState, saveState } from '@/hooks/useLocalStorage'
