@@ -60,11 +60,11 @@ export default function Home() {
         <h1 className="font-semibold text-2xl md:text-3xl">
           Find your cocktail 🍸
         </h1>
-        <div className="flex items-center w-full my-10 md:my-20">
+        <div className="flex items-center w-full mt-10 md:mt-20">
           <Input
             ref={inputRef}
             placeholder="Search for cocktail"
-            className="rounded-r-none grow text-xl"
+            className="rounded-r-none grow text-xl text-text"
             disabled={mutation.isPending}
             onKeyDown={e => {
               if (e.key === 'Enter') {
@@ -75,27 +75,24 @@ export default function Home() {
           />
           <Button
             type="button"
-            className="rounded-l-none text-3xl min-w-20"
+            className="rounded-l-none text-3xl min-w-20 bg-blue-500"
             onClick={handleSearch}
             disabled={mutation.isPending}
           >
             🍹
           </Button>
         </div>
-        {mutation.isPending && <p>Loading...</p>}
-        {mutation.isError && (
-          <p>
-            Error: {(mutation.error as Error)?.message || 'An error occurred'}
-          </p>
-        )}
-        {mutation.isSuccess && (
-          <div className="w-full">{renderCocktails()}</div>
-        )}
+        <div className="h-10 md:h-20 flex justify-center items-center w-full">
+          {mutation.isPending && <p>Loading...</p>}
+          {mutation.isError && (
+            <p>
+              Error: {(mutation.error as Error)?.message || 'An error occurred'}
+            </p>
+          )}
+        </div>
         {isClient && !isEmpty(searchResults) && (
-          <>
-            <h3 className="mt-20 text-lg font-semibold">
-              Recent search results:
-            </h3>
+          <div className="mb-20 flex flex-col items-center">
+            <h3 className="text-lg font-semibold">Recent search results:</h3>
             <div className="flex flex-wrap justify-center gap-4 mt-4">
               {searchResults?.slice(0, 10).map(res => {
                 return (
@@ -109,7 +106,10 @@ export default function Home() {
                 )
               })}
             </div>
-          </>
+          </div>
+        )}
+        {mutation.isSuccess && (
+          <div className="w-full">{renderCocktails()}</div>
         )}
       </div>
     </div>

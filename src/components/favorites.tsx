@@ -25,7 +25,7 @@ import {
 export default function Favorites() {
   const [open, setOpen] = React.useState<boolean>(false)
 
-  const handleLinkClick = () => {
+  const handleClosePopover = () => {
     setOpen(false)
   }
 
@@ -38,11 +38,12 @@ export default function Favorites() {
 
   const handleClearFavorites = () => {
     dispatch(clearFavorites())
+    handleClosePopover()
   }
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="p-0 text-2xl">
+      <PopoverTrigger className="p-0 text-xl md:text-2xl">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
@@ -74,7 +75,7 @@ export default function Favorites() {
                     <Link
                       href={`/${item.id}`}
                       className="overflow-hidden shrink-0 rounded-sm"
-                      onClick={handleLinkClick}
+                      onClick={handleClosePopover}
                     >
                       <Image
                         src={item.thumb}
@@ -86,7 +87,7 @@ export default function Favorites() {
                     <Link
                       href={`/${item.id}`}
                       className="grow overflow-hidden truncate"
-                      onClick={handleLinkClick}
+                      onClick={handleClosePopover}
                     >
                       {item.name}
                     </Link>
