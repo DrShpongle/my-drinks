@@ -37,8 +37,6 @@ export default function Home() {
     },
   })
 
-  console.log({ mutation })
-
   const handleSearch = () => {
     if (inputRef.current && inputRef.current.value.trim() !== '') {
       mutation.mutate(inputRef.current.value)
